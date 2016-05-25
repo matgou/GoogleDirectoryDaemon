@@ -1,0 +1,4 @@
+admin_user_id: my.user@my_org.com
+application_name: GoogleDirectoryDaemon-test
+authorizer: DefaultAuthorizer
+message_handler: DefaultMessageHandler

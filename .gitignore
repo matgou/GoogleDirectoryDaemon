@@ -1,0 +1,3 @@
+*.sublime-*
+config/conf.yml
+secrets/*
