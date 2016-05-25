@@ -5,7 +5,7 @@ require "bunny"
 
 class Listener
 
-  def initialize(host: "localhost", port: 5672, queue_name: "gapps", rabbitmq_user: 'gapps', rabbitmq_password: 'gapps', exchange_name: 'exchange', message_handler: DefaultMessageHandler)
+  def initialize(host: "localhost", port: 5672, queue_name: "gapps", rabbitmq_user: nil, rabbitmq_password: nil, exchange_name: nil, message_handler: DefaultMessageHandler)
     @host=host
     @port=port
     @queue_name=queue_name
@@ -19,10 +19,15 @@ class Listener
     conn = Bunny.new(:hostname => @host, :user => @rabbitmq_user, :pass => @rabbitmq_password)
     conn.start
 
+
     ch   = conn.create_channel
-    x    = ch.direct(@exchange_name)
-    q    = ch.queue(@queue_name, :exclusive => true)
-    q.bind(@exchange_name, :routing_key => "request.gapps.create");
+    if @exchange_name
+      x    = ch.direct(@exchange_name)
+      q    = ch.queue(@queue_name, :exclusive => true)
+      q.bind(@exchange_name, :routing_key => "request.gapps.create")
+    else
+      q    = ch.queue(@queue_name)
+    end
 
     puts " [*] Waiting for messages in #{q.name}. To exit press CTRL+C"
     ch.prefetch(1)

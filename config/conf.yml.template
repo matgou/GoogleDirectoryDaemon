@@ -5,3 +5,6 @@ message_handler: DefaultMessageHandler
 rabbitmq_host: localhost
 rabbitmq_port: 5672
 rabbitmq_queue_name: gdirdaemon
+exchange_name: exchange
+rabbitmq_user: my_user
+rabbitmq_password: P4ssWord
