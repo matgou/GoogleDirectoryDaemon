@@ -93,8 +93,6 @@ class Google::Apis::AdminDirectoryV1::User
     @service||=DirectoryService.new
   end
 
-  private
-
     # Copy provided user data in current user data
     def update_from_user_obj! u_obj
       self.update!(u_obj.to_h)

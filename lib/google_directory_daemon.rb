@@ -24,7 +24,7 @@ class GoogleDirectoryDaemon
 
   def initialize()
     listnr=Listener.new(message_handler:Object.const_get(Config.value_at('message_handler')))
-    #listnr.listen
+    listnr.listen
   end
 end
 
