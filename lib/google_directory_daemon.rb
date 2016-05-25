@@ -27,7 +27,10 @@ class GoogleDirectoryDaemon
       message_handler:Object.const_get(AppConfig.value_at('message_handler')),
       host: AppConfig.value_at('rabbitmq_host'),
       port: AppConfig.value_at('rabbitmq_port'),
-      queue_name: AppConfig.value_at('rabbitmq_queue_name')
+      queue_name: AppConfig.value_at('rabbitmq_queue_name'),
+      exchange_name: AppConfig.value_at('rabbitmq_exchange_name'),
+      rabbitmq_user: AppConfig.value_at('rabbitmq_user'),
+      rabbitmq_password: AppConfig.value_at('rabbitmq_password')
       )
     listnr.listen
   end
