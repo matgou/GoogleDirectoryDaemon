@@ -16,7 +16,7 @@ class Listener
   end
 
   def listen
-    conn = Bunny.new(:hostname => "localhost", :user => @rabbitmq_user, :pass => @rabbitmq_password)
+    conn = Bunny.new(:hostname => @host, :user => @rabbitmq_user, :pass => @rabbitmq_password)
     conn.start
 
     ch   = conn.create_channel
