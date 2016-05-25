@@ -23,8 +23,10 @@ end
 class GoogleDirectoryDaemon
 
   def initialize()
+    message_handler_map=AppConfig.value_at('message_handler_map').inject({}){|o,(k,v)| o[k]=Object.const_get(v); o}
+
     listnr=Listener.new(
-      message_handler:Object.const_get(AppConfig.value_at('message_handler')),
+      message_handler_map:message_handler_map,
       host: AppConfig.value_at('rabbitmq_host'),
       port: AppConfig.value_at('rabbitmq_port'),
       queue_name: AppConfig.value_at('rabbitmq_queue_name'),

@@ -1,7 +1,8 @@
 admin_user_id: my.user@my_org.com
 application_name: GoogleDirectoryDaemon-test
 authorizer: DefaultAuthorizer
-message_handler: DefaultMessageHandler
+message_handler_map:
+  request.gapps.create: DefaultMessageHandler
 rabbitmq_host: localhost
 rabbitmq_port: 5672
 rabbitmq_queue_name: gdirdaemon
