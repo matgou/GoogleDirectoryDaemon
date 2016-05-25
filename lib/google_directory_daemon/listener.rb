@@ -20,8 +20,8 @@ class Listener
     conn.start
 
     ch   = conn.create_channel
-    x    = ch.direct(@exchange_name)
-    q    = ch.queue(@queue_name, :exclusive => true)
+    x    = ch.topic(@exchange_name, :durable => true)
+    q    = ch.queue(@queue_name, :durable => true)
     q.bind(@exchange_name, :routing_key => "request.gapps.create");
 
     puts " [*] Waiting for messages in #{q.name}. To exit press CTRL+C"
