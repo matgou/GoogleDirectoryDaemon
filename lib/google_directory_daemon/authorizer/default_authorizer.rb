@@ -9,7 +9,7 @@ class DefaultAuthorizer
   OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
 
   def self.authorize
-    user_id=Config.value_at('admin_user_id')
+    user_id=AppConfig.value_at('admin_user_id')
     scope = 'https://www.googleapis.com/auth/admin.directory.user'
     client_id = Google::Auth::ClientId.from_file(File.join(BASE_PATH,'secrets/client_secret.json'))
     token_store = Google::Auth::Stores::FileTokenStore.new(
