@@ -37,9 +37,10 @@ class GoogleDirectoryDaemon
       queue_name: AppConfig.value_at('rabbitmq_queue_name'),
       exchange_name: AppConfig.value_at('rabbitmq_exchange_name'),
       rabbitmq_user: AppConfig.value_at('rabbitmq_user'),
-      rabbitmq_password: AppConfig.value_at('rabbitmq_password')
+      rabbitmq_password: AppConfig.value_at('rabbitmq_password'),
+      deferred_time: AppConfig.value_at('rabbitmq_deferred_time'),
       )
-    #listnr.listen
+    listnr.listen
   end
 end
 
