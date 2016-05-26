@@ -2,22 +2,27 @@
 # encoding: utf-8
 
 BASE_PATH=File.expand_path('..',File.dirname(__FILE__))
-
-Dir[File.join(BASE_PATH,"lib/google_directory_daemon/authorizer/*.rb")].each {|file| require file }
-Dir[File.join(BASE_PATH,"lib/google_directory_daemon/message_handler/*.rb")].each {|file| require file }
-require File.join(BASE_PATH,'lib/google_directory_daemon/listener.rb')
-require File.join(BASE_PATH,'lib/google_directory_daemon/directory_service.rb')
-require File.join(BASE_PATH,'lib/google_directory_daemon/user.rb')
-
-require 'yaml'
-
-
 class AppConfig
   def self.value_at key
     @conf||=YAML::load(File.open(File.join(BASE_PATH,'config/conf.yml')))
     @conf[key]
   end
 end
+
+Dir[File.join(BASE_PATH,"lib/google_directory_daemon/google/authorizer/*.rb")].each {|file| require file }
+Dir[File.join(BASE_PATH,"lib/google_directory_daemon/message_handler/*.rb")].each {|file| require file }
+require File.join(BASE_PATH,'lib/google_directory_daemon/listener.rb')
+require File.join(BASE_PATH,'lib/google_directory_daemon/google/directory_service.rb')
+require File.join(BASE_PATH,'lib/google_directory_daemon/google/g_user.rb')
+require File.join(BASE_PATH,'lib/google_directory_daemon/gram/json_formater.rb')
+require File.join(BASE_PATH,'lib/google_directory_daemon/gram/gram_account.rb')
+require File.join(BASE_PATH,'lib/google_directory_daemon/gram/gram_email.rb')
+require File.join(BASE_PATH,'lib/google_directory_daemon/gram/gram_search.rb')
+
+
+require 'yaml'
+
+
 
 
 class GoogleDirectoryDaemon
@@ -34,7 +39,7 @@ class GoogleDirectoryDaemon
       rabbitmq_user: AppConfig.value_at('rabbitmq_user'),
       rabbitmq_password: AppConfig.value_at('rabbitmq_password')
       )
-    listnr.listen
+    #listnr.listen
   end
 end
 

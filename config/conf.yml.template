@@ -1,11 +1,19 @@
-admin_user_id: my.user@my_org.com
 application_name: GoogleDirectoryDaemon-test
+
+admin_user_id: my.user@my_org.com
 authorizer: DefaultAuthorizer
+
 message_handler_map:
   request.gapps.create: DefaultMessageHandler
+
 rabbitmq_host: localhost
 rabbitmq_port: 5672
 rabbitmq_queue_name: gdirdaemon
 exchange_name: exchange
 rabbitmq_user: my_user
 rabbitmq_password: P4ssWord
+
+gram_api_host: myHost.com
+gram_api_user: myUser
+gram_api_password: PasswRD
+gram_api_proxy: myproxy.mydomain.com

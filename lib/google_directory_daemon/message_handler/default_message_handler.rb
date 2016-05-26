@@ -49,7 +49,7 @@ class DefaultMessageHandler
   #  -primaryEmail
   def delete_user data
     if data.values_at(:primary_email).all?
-      Google::Apis::AdminDirectoryV1::User.new(**data).delete
+      GUser.new(**data).delete
       puts " [x] User #{data[:primary_email]} deleted"
     else
       error("Invalid Data")
@@ -60,7 +60,7 @@ class DefaultMessageHandler
   #  -primaryEmail
   def update_user data
     if data.values_at(:primary_email).all?
-      Google::Apis::AdminDirectoryV1::User.new(**data).save
+      GUser.new(**data).save
       puts " [x] User #{data[:primary_email]} updated"
     else
       error("Invalid Data")
@@ -73,8 +73,8 @@ class DefaultMessageHandler
   #  -primary_email
   def create_user data
     if data.values_at(:name,:password,:primary_email).all?
-      unless Google::Apis::AdminDirectoryV1::User.find(data[:primary_email])
-        user=Google::Apis::AdminDirectoryV1::User.new
+      unless GUser.find(data[:primary_email])
+        user=GUser.new
         user.update!(**data)
         user.save
         puts " [x] User #{data[:primary_email]} created"

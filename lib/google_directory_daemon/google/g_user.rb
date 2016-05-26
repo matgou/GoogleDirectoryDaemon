@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
-
+GUser=Google::Apis::AdminDirectoryV1::User
 class Google::Apis::AdminDirectoryV1::User
   #
   # Add methods to Google::Apis::AdminDirectoryV1::User to have a pseudo
