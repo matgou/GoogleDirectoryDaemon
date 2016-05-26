@@ -18,11 +18,11 @@ class Listener
   end
 
   def listen
-    conn = rmq_connection
 
+    conn = rmq_connection
     ch   = conn.create_channel
-    x    = ch.topic(@exchange_name)
-    q    = ch.queue(@queue_name, :exclusive => true)
+    x    = ch.topic(@exchange_name, :durable => true)
+    q    = ch.queue(@queue_name, :durable => true)
 
     @message_handler_map.keys.each do |routing_key|
       q.bind(@exchange_name, :routing_key => routing_key)
