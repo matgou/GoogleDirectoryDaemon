@@ -11,6 +11,8 @@ end
 
 Dir[File.join(BASE_PATH,"lib/google_directory_daemon/google/authorizer/*.rb")].each {|file| require file }
 Dir[File.join(BASE_PATH,"lib/google_directory_daemon/message_handler/*.rb")].each {|file| require file }
+require File.join(BASE_PATH,'lib/google_directory_daemon/errors.rb')
+require File.join(BASE_PATH,'lib/google_directory_daemon/message.rb')
 require File.join(BASE_PATH,'lib/google_directory_daemon/listener.rb')
 require File.join(BASE_PATH,'lib/google_directory_daemon/google/directory_service.rb')
 require File.join(BASE_PATH,'lib/google_directory_daemon/google/g_user.rb')

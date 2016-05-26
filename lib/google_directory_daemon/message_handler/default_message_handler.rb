@@ -25,46 +25,8 @@ class DefaultMessageHandler
   #  - delete
 
   def initialize msg
-    begin
-      body=JSON.parse(msg)
-
-      data= prepare_data(body["data"])
-
-      case body['action']
-      when "delete"
-        delete_user data
-      when "update"
-        update_user data
-      when "create"
-        create_user data
-      else
-        error("Unknown action requested")
-      end
-    rescue JSON::ParserError => e
-      error("Unable to parse JSON message body")
-    end
-  end
-
-  # Expect data to contain :
-  #  -primaryEmail
-  def delete_user data
-    if data.values_at(:primary_email).all?
-      GUser.new(**data).delete
-      puts " [x] User #{data[:primary_email]} deleted"
-    else
-      error("Invalid Data")
-    end
-  end
-
-  # Expect data to contain :
-  #  -primaryEmail
-  def update_user data
-    if data.values_at(:primary_email).all?
-      GUser.new(**data).save
-      puts " [x] User #{data[:primary_email]} updated"
-    else
-      error("Invalid Data")
-    end
+    data=prepare_data(msg.data)
+    create_user(data)
   end
 
   # Expect data to contain :
@@ -80,9 +42,11 @@ class DefaultMessageHandler
         puts " [x] User #{data[:primary_email]} created"
       else
         error("Existing user")
+        raise SoftfailError.new(nil), "Existing User"
       end
     else
       error("Invalid Data")
+      raise HardfailError, "Invalid Data"
     end
   end  
 
