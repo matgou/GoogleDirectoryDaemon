@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
-class DefaultMessageHandler
+class DefaultMessageHandler < GorgService::MessageHandler
 
   # This handler is based on straightforward orders passed to the daemon
   #
@@ -42,11 +42,11 @@ class DefaultMessageHandler
         puts " [x] User #{data[:primary_email]} created"
       else
         error("Existing user")
-        raise SoftfailError.new(nil), "Existing User"
+        raise_softfail "Existing User"
       end
     else
       error("Invalid Data")
-      raise HardfailError, "Invalid Data"
+      raise_hardfail "Invalid Data"
     end
   end  
 
