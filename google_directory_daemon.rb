@@ -27,7 +27,7 @@ GorgService.configure do |c|
   c.rabbitmq_exchange_name=AppConfig.value_at('rabbitmq_exchange_name')
   c.rabbitmq_vhost=AppConfig.value_at('rabbitmq_vhost')
   c.rabbitmq_deferred_time=1000
-  c.message_handler_map=AppConfig.value_at('message_handler_map')
+  c.message_handler_map=AppConfig.value_at('message_handler_map').inject({}){|o,(k,v)| o[k]=Object.const_get(v); o}
 end
 
 class GoogleDirectoryDaemon
