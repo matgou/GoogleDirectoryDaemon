@@ -17,14 +17,17 @@ end
 
 
 GorgService.configure do |c|
-  c.application_name="GoogleDirectoryDaemon-test"
-  c.application_id="gdd-t"
-  c.rabbitmq_host="localhost"
-  c.rabbitmq_port=5672
-  c.rabbitmq_queue_name="gapps4"
-  c.rabbitmq_exchange_name="agoram_event_exchange"
+  c.application_name="GoogleDirectoryDaemon-test-kapable"
+  c.application_id="gapps_kapable"
+  c.rabbitmq_host=AppConfig.value_at('rabbitmq_host')
+  c.rabbitmq_port=AppConfig.value_at('rabbitmq_port')
+  c.rabbitmq_user=AppConfig.value_at('rabbitmq_user')
+  c.rabbitmq_password=AppConfig.value_at('rabbitmq_password')
+  c.rabbitmq_queue_name=AppConfig.value_at('rabbitmq_queue_name')
+  c.rabbitmq_exchange_name=AppConfig.value_at('rabbitmq_exchange_name')
+  c.rabbitmq_vhost=AppConfig.value_at('rabbitmq_vhost')
   c.rabbitmq_deferred_time=1000
-  c.message_handler_map={"request.gapps.create" => DefaultMessageHandler}
+  c.message_handler_map=AppConfig.value_at('message_handler_map')
 end
 
 class GoogleDirectoryDaemon
