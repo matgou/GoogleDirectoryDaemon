@@ -4,8 +4,8 @@
 require 'yaml'
 require 'gorg_service'
 
-Dir[File.expand_path("connfig/initializers/*.rb",__FILE__)].each {|file| require file }
-Dir[File.expand_path("app/**/*.rb",__FILE__)].each {|file| require file }
+$LOAD_PATH << File.join(Dir.pwd,'app')
+
 
 class GoogleDirectoryDaemon
 
@@ -45,3 +45,5 @@ class GoogleDirectoryDaemon
   end
 end
 
+Dir[File.expand_path("../app/**/*.rb",__FILE__)].each {|file| require file }
+Dir[File.expand_path("../config/initializers/*.rb",__FILE__)].each {|file|require file }

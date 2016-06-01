@@ -4,7 +4,6 @@
 require 'gorg_service'
 
 # For default values see : https://github.com/Zooip/gorg_service
-
 GorgService.configure do |c|
   # application name for display usage
   c.application_name= GoogleDirectoryDaemon.config["application_name"]
