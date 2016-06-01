@@ -1,11 +1,3 @@
-GIT
-  remote: https://github.com/Zooip/gorg_service
-  revision: c5d215bb160fee43597b77d1094c8c1a565c51de
-  branch: master
-  specs:
-    gorg_service (0.1.0)
-      bunny (~> 2.2, >= 2.2.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -22,7 +14,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.4.0)
+    addressable (2.3.8)
     amq-protocol (2.0.1)
     builder (3.2.2)
     bunny (2.3.1)
@@ -47,12 +39,21 @@ GEM
       multi_json (~> 1.11)
       os (~> 0.9)
       signet (~> 0.7)
+    gorg_message_sender (0.2.0)
+      bunny (~> 2.2, >= 2.2.2)
+      json-schema (~> 2.6)
+    gorg_service (2.0.0)
+      bunny (~> 2.2, >= 2.2.2)
+      gorg_message_sender (~> 0)
+      json-schema (~> 2.6)
     gram_v1_client (1.0.0)
       activeresource (~> 4.0)
     httpclient (2.8.0)
     hurley (0.2)
     i18n (0.7.0)
     json (1.8.3)
+    json-schema (2.6.2)
+      addressable (~> 2.3.8)
     jwt (1.5.4)
     little-plugger (1.1.4)
     logging (2.1.0)
@@ -90,7 +91,8 @@ DEPENDENCIES
   bunny (>= 2.2.2)
   google-api-client
   googleauth
-  gorg_service!
+  gorg_message_sender
+  gorg_service
   gram_v1_client
 
 BUNDLED WITH
