@@ -11,9 +11,9 @@ class DefaultAuthorizer
   def self.authorize
     user_id=AppConfig.value_at('admin_user_id')
     scope = 'https://www.googleapis.com/auth/admin.directory.user'
-    client_id = Google::Auth::ClientId.from_file(File.join(BASE_PATH,'secrets/client_secret.json'))
+    client_id = Google::Auth::ClientId.from_file(File.join(GoogleDirectoryDaemon.root,'secrets/client_secret.json'))
     token_store = Google::Auth::Stores::FileTokenStore.new(
-      :file => File.join(BASE_PATH,'secrets/tokens.yaml'))
+      :file => File.join(GoogleDirectoryDaemon.root,'secrets/tokens.yaml'))
     authorizer = Google::Auth::UserAuthorizer.new(client_id, scope, token_store)
 
     credentials = authorizer.get_credentials(user_id)

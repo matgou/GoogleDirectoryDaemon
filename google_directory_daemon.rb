@@ -4,36 +4,44 @@
 require 'yaml'
 require 'gorg_service'
 
-
-BASE_PATH=File.dirname(__FILE__)
-Dir[File.join(BASE_PATH,"app","**","*.rb")].each {|file| require file }
-
-class AppConfig
-  def self.value_at key
-    @conf||=YAML::load(File.open(File.join(BASE_PATH,'config','conf.yml')))
-    @conf[key]
-  end
-end
-
-
-GorgService.configure do |c|
-  c.application_name="GoogleDirectoryDaemon-test-kapable"
-  c.application_id="gapps_kapable"
-  c.rabbitmq_host=AppConfig.value_at('rabbitmq_host')
-  c.rabbitmq_port=AppConfig.value_at('rabbitmq_port')
-  c.rabbitmq_user=AppConfig.value_at('rabbitmq_user')
-  c.rabbitmq_password=AppConfig.value_at('rabbitmq_password')
-  c.rabbitmq_queue_name=AppConfig.value_at('rabbitmq_queue_name')
-  c.rabbitmq_exchange_name=AppConfig.value_at('rabbitmq_exchange_name')
-  c.rabbitmq_vhost=AppConfig.value_at('rabbitmq_vhost')
-  c.rabbitmq_deferred_time=1000
-  c.message_handler_map=AppConfig.value_at('message_handler_map').inject({}){|o,(k,v)| o[k]=Object.const_get(v); o}
-end
+Dir[File.expand_path("connfig/initializers/*.rb",__FILE__)].each {|file| require file }
+Dir[File.expand_path("app/**/*.rb",__FILE__)].each {|file| require file }
 
 class GoogleDirectoryDaemon
 
+  RAW_CONFIG ||= YAML::load(File.open(File.expand_path("config/config.yml")))
+  ENV['GOOGLE_DIRECTORY_DAEMON_ENV']||="development"
+
   def initialize
-    GorgService.new.run
+    @gorg_service=GorgService.new
   end
-  
+
+ def run
+    begin
+      self.start
+      puts " [*] Waiting for messages. To exit press CTRL+C"
+      loop do
+        sleep(1)
+      end
+    rescue SystemExit, Interrupt => _
+      self.stop
+    end
+  end
+
+  def start
+    @gorg_service.start
+  end
+
+  def stop
+    @gorg_service.stop
+  end
+
+  def self.config
+    RAW_CONFIG[ENV['GOOGLE_DIRECTORY_DAEMON_ENV']]
+  end
+
+  def self.root
+    File.dirname(__FILE__)
+  end
 end
+
