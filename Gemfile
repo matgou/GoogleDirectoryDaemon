@@ -8,3 +8,6 @@ gem 'activeresource'
 gem 'gorg_service'
 gem 'gorg_message_sender'
 gem 'gram_v1_client'
+gem "codeclimate-test-reporter", group: :test
+
+gemspec

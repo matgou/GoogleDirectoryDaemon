@@ -2,29 +2,55 @@
 # encoding: utf-8
 
 class CreateUserMessageHandler < GorgService::MessageHandler
-  # Respond to routing key: request.gapps.create
 
   def initialize msg
-    data=prepare_data(msg.data)
-    create_user(data)
+    # Get Id from message
+    id=msg.data[:id_soce]
+
+    # Register services
+    account_api = register_account_api_service
+    email_api   = register_email_api_service
+    google_api  = register_google_api_service
+
+    # get Hash for account
+    account = account_api.getData(id)
+    if account
+      puts " [x] Account n°#{id} exists"
+
+      # Maps Gram attributes
+      firstname = account['firstname']
+      lastname  = account['lastname']
+
+      # Get password from gram_Api
+      password = account_api.getPassword(id)
+
+      # Get email from gorg_mail
+      email = email_api.getMainEmail(id)
+
+      data = {
+          'password' => password,
+          'primaryEmail' => email,
+          'name' => {
+              'familyName' => lastname,
+              'givenName' => firstname
+          }
+      }
+      google_api.createAccount(data)
+
+    else
+      puts " [x] Account n°#{id} doesn't exist in GRAM"
+    end
   end
 
-  # Expect data to contain :
-  #  -name
-  #  -password
-  #  -primary_email
-  def create_user data
-    if data.values_at(:name,:password,:primary_email).all?
-      unless GUser.find(data[:primary_email])
-        user=GUser.new
-        user.update!(**data)
-        user.save
-        puts " [x] User #{data[:primary_email]} created"
-      else
-        raise_softfail "Existing User"
-      end
-    else
-      raise_hardfail "Invalid Data"
-    end
-  end  
+  def register_google_api_service
+      return GoogleApiStub.new
+  end
+
+  def register_email_api_service
+      return EmailApiStub.new
+  end
+
+  def register_account_api_service
+      return AccountsApiStub.new
+  end
 end
