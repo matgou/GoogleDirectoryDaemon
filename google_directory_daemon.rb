@@ -8,6 +8,9 @@ $LOAD_PATH << File.join(Dir.pwd,'app')
 
 
 class GoogleDirectoryDaemon
+  @@account_api_service = nil
+  @@email_api_service = nil
+  @@google_api_service = nil
 
   RAW_CONFIG ||= YAML::load(File.open(File.expand_path("config/config.yml")))
   ENV['GOOGLE_DIRECTORY_DAEMON_ENV']||="development"
@@ -15,6 +18,33 @@ class GoogleDirectoryDaemon
   def initialize
     @gorg_service=GorgService.new
   end
+
+  def self.configure
+     yield
+  end
+
+  # getter
+  def self.account_api_service
+      return @@account_api_service
+  end
+  def self.email_api_service
+      return @@email_api_service
+  end
+  def self.google_api_service
+      return @@google_api_service
+  end
+
+  # setter
+  def self.set_account_api_service service
+      @@account_api_service = service
+  end
+  def self.set_email_api_service service
+      @@email_api_service = service
+  end
+  def self.set_google_api_service service
+      @@google_api_service = service
+  end
+  
 
  def run
     begin

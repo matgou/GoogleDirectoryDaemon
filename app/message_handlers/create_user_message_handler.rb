@@ -43,14 +43,14 @@ class CreateUserMessageHandler < GorgService::MessageHandler
   end
 
   def register_google_api_service
-      return GoogleApiStub.new
+      return GoogleDirectoryDaemon.google_api_service
   end
 
   def register_email_api_service
-      return EmailApiStub.new
+      return GoogleDirectoryDaemon.email_api_service
   end
 
   def register_account_api_service
-      return AccountsApiStub.new
+      return GoogleDirectoryDaemon.account_api_service
   end
 end

@@ -27,6 +27,18 @@ default: &default
 
 development:
   <<: *default
+  account_api:
+    class: "AccountsApiStub"
+    params:
+      - "Johne"
+      - "Dooone"
+      - "MgouPassword"
+  email_api:
+    class: "EmailApiStub"
+    params:
+      - "johne_doone@poubs.org"
+  google_api:
+    class: "GoogleApiStub"
 
 test:
   <<: *default
